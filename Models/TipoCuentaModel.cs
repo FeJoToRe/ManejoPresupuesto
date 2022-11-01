@@ -1,14 +1,34 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ManejoPresupuesto.Controllers;
+using ManejoPresupuesto.Validations;
+using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace ManejoPresupuesto.Models
 {
-    public class TipoCuentaModel
+    public class TipoCuentaModel //IValidatableObject
     {
-        [Required(ErrorMessage = "No se puede dejar el campo vacio")]
-        [StringLength(maximumLength: 100, MinimumLength = 10, ErrorMessage = "El mensaje debe contener entre {2} y {1} caracteres")]
         public int ID { get; set; }
+        [Required(ErrorMessage = "No se puede dejar el campo vacio")]
+        [Display(Name = "Nombre del tipo de cuenta")]
+        [FirstLetterCaps]
+        [Remote(action: "VerifyExistenceTipoCuenta", controller: "TiposCuentasController")]
         public string Nombre { get; set; }
         public int UsuarioId { get; set; }
         public int Orden { get; set; }
+
+        /*public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Nombre != null && Nombre.Length > 0)
+            {
+                var firstLetter = Nombre[0].ToString();
+
+                if (firstLetter != firstLetter.ToUpper())
+
+                {
+                    yield return new ValidationResult("La primera letra debe ser mayuscula",
+                        new[] { nameof(Nombre)});
+                }
+            }
+        }*/
     }
 }
