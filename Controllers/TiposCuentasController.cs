@@ -19,6 +19,15 @@ namespace ManejoPresupuesto.Controllers
 
         }
 
+        public async Task<IActionResult> Index()
+        {
+            var usuarioId = 1;
+            var tiposCuentas = await repoTiposCuentas.Obtener(usuarioId);
+            return View(tiposCuentas);
+
+
+        }
+
         public IActionResult Crear()
         {
 
@@ -48,7 +57,7 @@ namespace ManejoPresupuesto.Controllers
 
             await repoTiposCuentas.Crear(tipoCuenta);
 
-            return View();
+            return RedirectToAction("Index");
 
         }
 

@@ -11,7 +11,7 @@ namespace ManejoPresupuesto.Models
         [Required(ErrorMessage = "No se puede dejar el campo vacio")]
         [Display(Name = "Nombre del tipo de cuenta")]
         [FirstLetterCaps]
-        [Remote(action: "VerifyExistenceTipoCuenta", controller: "TiposCuentasController")]
+        [Remote(action: "VerifyExistenceTipoCuenta", controller: "TiposCuentas")]
         public string Nombre { get; set; }
         public int UsuarioId { get; set; }
         public int Orden { get; set; }

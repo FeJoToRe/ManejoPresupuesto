@@ -9,5 +9,6 @@ namespace ManejoPresupuesto.Interfaces
 
         Task<bool> Existe(string nombre, int usuarioId);
 
+        Task<IEnumerable<TipoCuentaModel>> Obtener(int usuarioId);
     }
 }
