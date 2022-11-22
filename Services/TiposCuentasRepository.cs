@@ -39,7 +39,7 @@ namespace ManejoPresupuesto.Services
         
         }
 
-        public async Task<IEnumerable<TipoCuentaModel>> Obtener(int usuarioId)
+        public async Task<IEnumerable<TipoCuentaModel>> GetByID(int usuarioId)
         {
             using var connection = new SqlConnection(connString);
             return await connection.QueryAsync<TipoCuentaModel>(@"select TipoCuentaId, NombreCuenta, Orden
@@ -47,6 +47,35 @@ namespace ManejoPresupuesto.Services
                                                                  where UsuarioId = @usuarioId", new {usuarioId});
 
         }
+
+        public async Task Update(TipoCuentaModel tipoCuenta)
+        {
+            using var connection = new SqlConnection(connString);
+            await connection.ExecuteAsync(@"update TiposCuentas
+                                             set NombreCuenta = @Nombre
+                                             where TipoCuentaId = @ID", tipoCuenta);
+
+        }
+
+        public async Task<TipoCuentaModel> GetByID(int id, int usuarioId)
+        {
+            using var connection = new SqlConnection(connString);
+            return await connection.QueryFirstOrDefaultAsync<TipoCuentaModel>
+                (@"select TipoCuentaId, NombreCuenta, Orden
+                    from TiposCuentas
+                    where TipoCuentaId = @id and UsuarioId = @usuarioId", new {id, usuarioId});
+
+        }
+
+        public async Task Borrar(int id)
+        {
+            using var connection = new SqlConnection(connString);
+
+            await connection.ExecuteAsync("delete TiposCuentas where TipoCuentaId = @id", new {id});
+
+
+        }
+
 
     }
 }

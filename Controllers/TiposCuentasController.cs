@@ -12,17 +12,19 @@ namespace ManejoPresupuesto.Controllers
     public class TiposCuentasController : Controller
     {
         private readonly IRepositoryTiposCuentas repoTiposCuentas;
+        private readonly IServicioUsuarios userService;
 
-        public TiposCuentasController(IRepositoryTiposCuentas repoTiposCuentas)
+        public TiposCuentasController(IRepositoryTiposCuentas repoTiposCuentas,
+            IServicioUsuarios userService)
         {
             this.repoTiposCuentas = repoTiposCuentas;
-
+            this.userService = userService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var usuarioId = 1;
-            var tiposCuentas = await repoTiposCuentas.Obtener(usuarioId);
+            var usuarioId = userService.GetUserID();
+            var tiposCuentas = await repoTiposCuentas.GetByID(usuarioId);
             return View(tiposCuentas);
 
 
@@ -34,6 +36,20 @@ namespace ManejoPresupuesto.Controllers
             return View();
 
         }
+        [HttpGet]
+        public async Task<ActionResult> Editar(int ID)
+        {
+
+            var usuarioId = userService.GetUserID();
+            var tipoCuenta = await repoTiposCuentas.GetByID(ID, usuarioId);
+
+            if (tipoCuenta is null)
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+
+            return View(tipoCuenta);
+        }
 
 
         [HttpPost]
@@ -44,7 +60,7 @@ namespace ManejoPresupuesto.Controllers
                 return View(tipoCuenta);
             }
 
-            tipoCuenta.UsuarioId = 1;
+            tipoCuenta.UsuarioId = userService.GetUserID();
 
             var AlreadyExistsTipoCuenta = await repoTiposCuentas.Existe(tipoCuenta.Nombre, tipoCuenta.UsuarioId);
 
@@ -65,7 +81,7 @@ namespace ManejoPresupuesto.Controllers
         public async Task<IActionResult> VerifyExistenceTipoCuenta(string nombre)
         {
             /*validacion en front-end con JS*/
-            var usuarioId = 1;
+            var usuarioId = userService.GetUserID();
             var AlreadyExistsTipoCuenta = await repoTiposCuentas.Existe(nombre, usuarioId);
 
             if (AlreadyExistsTipoCuenta)
@@ -78,5 +94,48 @@ namespace ManejoPresupuesto.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Editar(TipoCuentaModel tipoCuenta)
+        {
+            var usuarioId = userService.GetUserID();
+            var tipoCuentaExists = await repoTiposCuentas.GetByID(tipoCuenta.ID, usuarioId);
+
+                if (tipoCuentaExists is null)
+                {
+                return RedirectToAction("NotFound", "Home");
+                }
+           await repoTiposCuentas.Update(tipoCuenta);
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Borrar(int id)
+        {
+
+            var usuarioId = userService.GetUserID();
+            var tipoCuenta = await repoTiposCuentas.GetByID(id, usuarioId);
+
+            if (tipoCuenta is null)
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+            return View(tipoCuenta);
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> BorrarTipoCuenta(int id)
+        {
+            var usuarioId = userService.GetUserID();
+            var tipoCuenta = await repoTiposCuentas.GetByID(id, usuarioId);
+
+            if (tipoCuenta is null)
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+            await repoTiposCuentas.Borrar(id);
+
+            return RedirectToAction("Index");
+        }
     }
 }
