@@ -2,6 +2,6 @@
 {
     public interface IServicioUsuarios
     {
-        int GetUserID();
+        int ObtenerUsuarioId();
     }
 }

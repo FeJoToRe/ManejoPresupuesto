@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ManejoPresupuesto.Models
 {
-    public class TipoCuentaModel //IValidatableObject
+    public class TipoCuenta //IValidatableObject
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         [Required(ErrorMessage = "No se puede dejar el campo vacio")]
         [Display(Name = "Nombre del tipo de cuenta")]
         [FirstLetterCaps]
-        [Remote(action: "VerifyExistenceTipoCuenta", controller: "TiposCuentas")]
+        [Remote(action: "VerificarExisteTipoCuenta", controller: "TiposCuentas")]
         public string Nombre { get; set; }
         public int UsuarioId { get; set; }
         public int Orden { get; set; }

@@ -1,4 +1,4 @@
-﻿@model TipoCuentaModel
+﻿@model TipoCuenta
 @{
     ViewData["Title"] = "Editar Tipo Cuenta";
 
@@ -10,7 +10,7 @@
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 <form asp-controller="TiposCuentas" asp-action="Editar">
-    <input type="hidden" asp-for="ID"/> 
+    <input type="hidden" asp-for="Id"/> 
     <div class="mb-3">
         <label asp-for="Nombre" class="form-label">Nombre</label>
         <input type="text" asp-for="Nombre" class="form-control" />

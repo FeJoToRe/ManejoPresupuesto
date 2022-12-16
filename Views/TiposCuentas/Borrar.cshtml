@@ -1,4 +1,4 @@
-﻿@model TipoCuentaModel
+﻿@model TipoCuenta
 
 @{
     ViewData["Title"] = "Borrar Tipo Cuenta";
@@ -9,7 +9,7 @@
 
 <form asp-action="BorrarTipoCuenta">
 
-    <input type="hidden" asp-for="ID" />
+    <input type="hidden" asp-for="Id" />
 
     <button type="submit" class="btn btn-danger">Borrar</button>
     <a class="btn btn-secondary" asp-action="Index">Cancelar</a>
