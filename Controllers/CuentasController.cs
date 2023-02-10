@@ -35,7 +35,7 @@ namespace ManejoPresupuesto.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Crear(CuentaCreacionViewModel cuenta, /**/ RepositorioCuentas repositorioCuentas)
+        public async Task<IActionResult> Crear(CuentaCreacionViewModel cuenta)
         {
             var usuarioId = servicioUsuarios.ObtenerUsuarioId();
             var tipoCuenta = await repositorioTiposCuentas.ObtenerPorId(cuenta.TipoCuentaId, usuarioId);
