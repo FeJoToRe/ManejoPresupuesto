@@ -15,6 +15,7 @@ namespace ManejoPresupuesto.Models
         public string Nombre { get; set; }
         public int UsuarioId { get; set; }
         public int Orden { get; set; }
+        public decimal Balance { get; set; }
 
         /*public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
