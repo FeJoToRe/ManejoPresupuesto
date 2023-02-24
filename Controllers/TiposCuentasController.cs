@@ -46,7 +46,7 @@ namespace ManejoPresupuesto.Controllers
 
             if (tipoCuenta is null)
             {
-                return RedirectToAction("NotFound", "Home");
+                return RedirectToAction("NoEncontrado", "Home");
             }
 
             return View(tipoCuenta);
@@ -125,7 +125,7 @@ namespace ManejoPresupuesto.Controllers
 
                 if (tipoCuentaExists is null)
                 {
-                return RedirectToAction("NotFound", "Home");
+                return RedirectToAction("NoEncontrado", "Home");
                 }
            await repoTiposCuentas.Actualizar(tipoCuenta);
 
@@ -140,7 +140,7 @@ namespace ManejoPresupuesto.Controllers
 
             if (tipoCuenta is null)
             {
-                return RedirectToAction("NotFound", "Home");
+                return RedirectToAction("NoEncontrado", "Home");
             }
             return View(tipoCuenta);
         }
@@ -153,7 +153,7 @@ namespace ManejoPresupuesto.Controllers
 
             if (tipoCuenta is null)
             {
-                return RedirectToAction("NotFound", "Home");
+                return RedirectToAction("NoEncontrado", "Home");
             }
             await repoTiposCuentas.Borrar(id);
 
