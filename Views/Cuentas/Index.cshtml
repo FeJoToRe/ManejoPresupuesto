@@ -51,7 +51,7 @@
                     var id = tipoCuenta.TipoCuenta.Replace(" ", "");
                     var dataBSTarget = "#" + id; //se genera un id para los acordeones para que abran y cierren
                     var claseTipoCuenta = ObtenerClaseBalance(tipoCuenta.Balance);
-                }
+                }   
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="@dataBSTarget"></button>
                 <span class="me-3">
                     <span><strong>@tipoCuenta.TipoCuenta</strong></span>
@@ -65,7 +65,15 @@
                         {
                             var claseCuenta = ObtenerClaseBalance(cuenta.Balance);
                             <li class="list-group-item">
-                                <span><strong>@cuenta.Nombre</strong></span>
+                                <span>
+                                    <strong>@cuenta.Nombre</strong>
+                                    <a asp-action="Editar" asp-route-id="@cuenta.Id" class="btn-primary btn">
+                                        <i class="bi-pencil-fill"></i>
+                                    </a>
+                                            <a class="btn-danger btn">
+                                        <i class="trash-fill"></i>
+                                    </a>
+                                </span>
                                 <span class="@claseCuenta">@FormatearBalance(cuenta.Balance)</span>
                             </li>
                         }
