@@ -37,26 +37,5 @@ namespace ManejoPresupuesto.Services
 
         }
 
-        public async Task<Cuenta> ObtenerPorId(int id, int usuarioId)
-        {
-            using var connection = new SqlConnection(connectionString);
-            return await connection.QueryFirstOrDefaultAsync<Cuenta>(@"select Cuentas.Id, Cuentas.Nombre, Balance, Descripcion,tipoCuentaId
-                                                        from Cuentas inner join TiposCuentas tc
-                                                        on tc.Id = Cuentas.TipoCuentaId
-                                                        where tc.UsuarioId = @UsuarioId and Cuentas.ID = @Id
-                                                        order by tc.Orden", new {id, usuarioId});
-
-        }
-
-        public async Task Actualizar(CuentaCreacionViewModel cuenta)
-        {
-            using var connection = new SqlConnection(connectionString);
-             await connection.ExecuteAsync(@"update Cuentas set Nombre = @Nombre, 
-                                                                Balance = @Balance, 
-                                                                Descripcion = @Descripcion, 
-                                                                TipoCuentaId = @TipoCuentaId
-                                                                where Id = @Id", cuenta);
-        }
-
     }
 }
